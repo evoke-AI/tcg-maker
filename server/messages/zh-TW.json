@@ -1,0 +1,228 @@
+{
+  "navigation": {
+    "home": "首頁",
+    "login": "登入",
+    "logout": "登出",
+    "admin": "管理員",
+    "dashboard": "儀表板",
+    "schools": "學校",
+    "mySchools": "我的學校",
+    "users": "使用者",
+    "assignments": "作業",
+    "profile": "個人資料"
+  },
+  "homePage": {
+    "title": "歡迎來到我們的應用程式",
+    "description": "這是一個範例網頁應用程式模板",
+    "getStarted": "開始使用",
+    "learnMore": "了解更多"
+  },
+  "loginPage": {
+    "title": "登入",
+    "identifier": "使用者名稱或電子郵件",
+    "email": "電子郵件",
+    "password": "密碼",
+    "submit": "登入",
+    "forgotPassword": "忘記密碼？",
+    "navigation": {
+      "home": "返回首頁"
+    }
+  },
+  "adminPage": {
+    "title": "管理員儀表板",
+    "welcome": "歡迎，{name}",
+    "users": "使用者",
+    "settings": "設定"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "發生錯誤",
+    "errors": {
+      "unauthorized": "未授權存取",
+      "notFound": "找不到資源",
+      "server": "伺服器發生錯誤",
+      "fetch": "無法取得資料"
+    },
+    "success": "操作成功",
+    "cancel": "取消",
+    "save": "儲存",
+    "delete": "刪除",
+    "edit": "編輯",
+    "language": "語言",
+    "english": "英文",
+    "chinese": "繁體中文",
+    "switchTo": "切換至{language}",
+    "viewAll": "查看全部",
+    "lastUpdated": "最後更新",
+    "days": "天",
+    "ago": "前",
+    "status": {
+      "label": "狀態",
+      "active": "啟用",
+      "inactive": "停用",
+      "pending": "待處理"
+    },
+    "optional": "選填",
+    "saving": "儲存中...",
+    "deleting": "刪除中",
+    "enable": "啟用",
+    "passwordPlaceholder": "留空以保持目前密碼",
+    "roles": {
+      "systemRoleLabel": "角色",
+      "selectSystemRole": "選擇角色",
+      "noSystemRole": "無系統角色",
+      "user": "使用者",
+      "admin": "管理員"
+    },
+    "actions": "操作",
+    "search": "搜尋",
+    "add": "新增",
+    "remove": "移除",
+    "manage": "管理",
+    "previous": "上一頁",
+    "next": "下一頁",
+    "page": "頁面",
+    "of": "共",
+    "total": "總計",
+    "members": "成員",
+    "users": "使用者",
+    "classes": "班級",
+    "overview": "概覽",
+    "details": "詳細資訊",
+    "settings": "設定",
+    "information": "資訊",
+    "quickActions": "快速操作",
+    "notProvided": "未提供",
+    "created": "建立時間",
+    "joined": "加入時間",
+    "grade": "年級",
+    "dept": "部門",
+    "id": "編號",
+    "email": "電子郵件",
+    "username": "使用者名稱",
+    "studentId": "學生編號",
+    "gradeLevel": "年級"
+  },
+  "dashboardPage": {
+    "title": "儀表板",
+    "welcome": "歡迎來到您的儀表板。您可以在此管理您的帳戶並存取所有應用程式功能。",
+    "overview": "概覽",
+    "stats": {
+      "users": "總用戶數",
+      "projects": "進行中的專案",
+      "tasks": "待辦任務"
+    },
+    "userInfo": {
+      "welcomeBack": "歡迎回來",
+      "systemAdmin": "系統管理員",
+      "schoolAdmin": "學校管理員",
+      "teacher": "教師",
+      "student": "學生"
+    },
+    "quickStats": {
+      "schools": "學校",
+      "classes": "班級",
+      "students": "學生",
+      "assignments": "待完成作業",
+      "assignmentsToGrade": "待評分"
+    },
+    "sections": {
+      "schoolInfo": "學校資訊",
+      "teachingClasses": "您教授的班級",
+      "studentClasses": "您的班級",
+      "recentAssignments": "最近作業",
+      "assignmentsDue": "待完成作業",
+      "assignmentsToGrade": "待評分作業",
+      "quickActions": "快速操作"
+    },
+    "actions": {
+      "viewAllAssignments": "查看所有作業",
+      "viewAssignments": "查看作業",
+      "viewAll": "查看全部",
+      "assignments": "作業",
+      "assignmentsDesc": "查看和管理作業",
+      "adminPanel": "管理面板",
+      "adminPanelDesc": "管理學校和使用者",
+      "schools": "學校",
+      "schoolsDesc": "管理所有學校"
+    },
+    "details": {
+      "joined": "加入時間",
+      "created": "建立時間",
+      "due": "截止時間",
+      "submissions": "提交",
+      "students": "學生",
+      "assignments": "作業",
+      "needsGrading": "需要評分",
+      "code": "代碼",
+      "grade": "年級"
+    }
+  },
+  "admin": {
+    "schools": {
+      "title": "學校管理",
+      "description": "管理學校、創建新機構並監督學校管理員。",
+      "create": "創建學校",
+      "search": "搜尋學校...",
+      "noSchools": "找不到學校",
+      "createFirst": "開始創建您的第一所學校。",
+      "form": {
+        "name": "學校名稱",
+        "code": "學校代碼",
+        "address": "地址",
+        "phone": "電話號碼",
+        "email": "電子郵件",
+        "website": "網站",
+        "namePlaceholder": "林肯高中",
+        "codePlaceholder": "LHS",
+        "addressPlaceholder": "教育街123號，城市，州 12345",
+        "phonePlaceholder": "+1 (555) 123-4567",
+        "emailPlaceholder": "admin@lincolnhigh.edu",
+        "websitePlaceholder": "https://www.lincolnhigh.edu",
+        "nameRequired": "學校名稱為必填項",
+        "createError": "創建學校失敗",
+        "creating": "創建中..."
+      }
+    },
+    "users": {
+      "title": "使用者管理",
+      "add": "新增使用者",
+      "list": "使用者列表",
+      "edit": "編輯使用者",
+      "delete": "刪除使用者",
+      "confirmDelete": "您確定要刪除此使用者嗎？此操作無法復原。",
+      "noResults": "找不到使用者",
+      "table": {
+        "name": "姓名",
+        "email": "電子郵件",
+        "password": "密碼",
+        "status": "狀態",
+        "lastLogin": "最後登入",
+        "actions": "操作"
+      }
+    },
+    "schoolManagement": {
+      "title": "學校管理",
+      "description": "管理學校資訊和設定",
+      "editSchool": "編輯學校",
+      "totalMembers": "總成員數",
+      "activeUsers": "{schoolName}的活躍使用者",
+      "commonTasks": "此學校的常見管理任務",
+      "manageUsers": "管理使用者",
+      "basicInfo": "學校的基本資訊",
+      "schoolInfo": "學校資訊",
+      "schoolId": "學校編號"
+    },
+    "schoolUsers": {
+      "title": "學校使用者",
+      "searchPlaceholder": "搜尋使用者...",
+      "addUser": "新增使用者",
+      "addUserTo": "新增使用者至{schoolName}",
+      "userManagementPlaceholder": "使用者管理功能將在此實作。",
+      "noUsersFound": "找不到使用者",
+      "tryAdjustingSearch": "請嘗試調整您的搜尋條件。",
+      "getStartedAddUsers": "開始為此學校新增使用者。",
+      "roles": "角色"
+    }
+  }
+} 

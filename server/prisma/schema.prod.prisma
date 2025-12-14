@@ -1,0 +1,214 @@
+// Production Environment Prisma Schema  
+// This file should be renamed to schema.prisma when deploying to production
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?   @db.NVarChar(255) // Computed field: lastName + firstName (HK style)
+  firstName     String    @db.NVarChar(255) // Required for school users
+  lastName      String    @db.NVarChar(255) // Required for school users  
+  email         String?   // Deprecated - kept for backward compatibility
+  username      String    // Username part of username@school-email login
+  password      String
+  emailVerified DateTime?
+  image         String?
+  isActive      Boolean   @default(true)
+  
+  // Student-specific fields
+  studentId     String?   // Optional student ID
+  gradeLevel    String?   @db.NVarChar(100) // Optional grade level (e.g., "Grade 9", "Year 1")
+  department    String?   @db.NVarChar(255) // Optional department for teachers
+
+  // System role - only SUPER_ADMIN or null
+  systemRole    String?   // "SUPER_ADMIN" or null
+
+  accounts      Account[]
+  sessions      Session[]
+
+  schoolMemberships SchoolMembership[]
+  teacherClasses    TeacherClass[]     // Classes where user is a teacher
+  studentClasses    StudentClass[]     // Classes where user is a student
+  
+  // Invitation relations
+  sentInvitations     SchoolInvitation[] @relation("InvitationInvitedBy") // Invitations sent by this user
+  acceptedInvitations SchoolInvitation[] @relation("InvitationAcceptedBy") // Invitations accepted by this user
+  
+  // Billing relations
+  creditUsages        SchoolCreditUsage[]
+
+  // Note: Email uniqueness removed due to nullable field causing SQL Server constraint issues
+  // Username uniqueness within school is enforced at application level  
+  // Login format: username@school-email
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model School {
+  id          String    @id @default(cuid())
+  name        String    @db.NVarChar(255)
+  code        String?   // Optional school code/identifier
+  address     String?   @db.NVarChar(Max)
+  phone       String?
+  email       String    @unique // Required and unique - used as domain for user logins
+  website     String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  members     SchoolMembership[]
+  classes     Class[]
+  invitations SchoolInvitation[]
+
+  // Billing relations
+  creditUsages SchoolCreditUsage[]
+
+  @@unique([code]) // School code must be unique if provided
+}
+
+model Class {
+  id          String    @id @default(cuid())
+  name        String    @db.NVarChar(255) // e.g., "Math 101", "English Literature"
+  code        String?   // e.g., "MATH101", "ENG201"
+  description String?   @db.NVarChar(Max)
+  gradeLevel  String?   @db.NVarChar(100) // e.g., "Grade 9", "Year 1"
+  subject     String?   @db.NVarChar(255) // e.g., "Mathematics", "English"
+  schoolYear  String?   // e.g., "2024-2025"
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  schoolId    String
+  school      School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  teachers    TeacherClass[]
+  students    StudentClass[]
+
+  @@unique([code, schoolId]) // Class code unique within school
+}
+
+model SchoolMembership {
+  id       String @id @default(cuid())
+  userId   String
+  schoolId String
+  
+  // School role - "ADMIN", "TEACHER", or "STUDENT" (system-enforced)
+  role     String
+  
+  joinedAt DateTime @default(now())
+  isActive Boolean  @default(true)
+
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, schoolId])
+}
+
+model TeacherClass {
+  id       String @id @default(cuid())
+  userId   String // Teacher user ID
+  classId  String
+  
+  assignedAt DateTime @default(now())
+  isActive   Boolean  @default(true)
+
+  user     User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  class    Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, classId])
+}
+
+model StudentClass {
+  id       String @id @default(cuid())
+  userId   String // Student user ID
+  classId  String
+  
+  enrolledAt DateTime @default(now())
+  isActive   Boolean  @default(true)
+
+  user     User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  class    Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, classId])
+}
+
+model SchoolInvitation {
+  id          String   @id @default(cuid())
+  email       String   // Email address to invite
+  role        String   // Role to assign when invitation is accepted
+  status      String   @default("PENDING") // PENDING, ACCEPTED, REJECTED, EXPIRED
+  invitedAt   DateTime @default(now())
+  acceptedAt  DateTime?
+  expiresAt   DateTime // Invitation expiration date
+  
+  // Relations
+  schoolId    String
+  school      School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  invitedById String
+  invitedBy   User     @relation("InvitationInvitedBy", fields: [invitedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  acceptedById String?
+  acceptedBy   User?   @relation("InvitationAcceptedBy", fields: [acceptedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@unique([email, schoolId]) // One invitation per email per school
+  @@index([schoolId, status])
+  @@index([email])
+}
+
+/// Tracks per-school credit usage for billing (1 per report, 1 per AI detect)
+model SchoolCreditUsage {
+  id           String   @id @default(cuid())
+  schoolId     String
+  userId       String
+  feature      String   // e.g., 'REPORT', 'AI_DETECT'
+  cost         Int      @default(1)
+  metadata     String?  @db.NVarChar(Max) // JSON string with any contextual data
+  createdAt    DateTime @default(now())
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([schoolId, createdAt])
+  @@index([feature])
+  @@index([userId, createdAt])
+}

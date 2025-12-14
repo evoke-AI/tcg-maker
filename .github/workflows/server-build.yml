@@ -1,0 +1,149 @@
+name: Deploy Server to Azure
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+      - '.github/workflows/deploy-to-azure.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+      - '.github/workflows/deploy-to-azure.yml'
+  workflow_dispatch:
+    inputs:
+      deploy_dev:
+        description: 'Deploy to Dev slot'
+        required: true
+        default: false
+        type: boolean
+
+env:
+  REGISTRY: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}
+  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  # Next.js server build and test
+  server-build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set lowercase image name
+        run: |
+          echo "DOCKER_IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Login to registry for all events (needed for checking if image exists)
+      - name: Log in to Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
+          password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+
+      # Check if image already exists
+      - name: Check if server image exists
+        id: check_image
+        continue-on-error: true
+        run: |
+          docker manifest inspect ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}-server:${{ env.IMAGE_TAG }} > /dev/null
+          echo "exists=true" >> $GITHUB_OUTPUT
+
+      # Build server image if it doesn't exist
+      - name: Build Docker image
+        id: build
+        if: steps.check_image.outcome == 'failure'
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          file: ./server/Dockerfile
+          # Only push for main branch or workflow dispatch
+          push: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+          # Load locally if not pushing (PR)
+          load: ${{ github.event_name == 'pull_request' }}
+          tags: ${{ github.event_name == 'pull_request' && format('{0}-server', env.DOCKER_IMAGE_NAME) || format('{0}/{1}-server', env.REGISTRY, env.DOCKER_IMAGE_NAME) }}:${{ env.IMAGE_TAG }}${{ github.event_name != 'pull_request' && format(',{0}/{1}-server:latest', env.REGISTRY, env.DOCKER_IMAGE_NAME) || '' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Test server container
+      - name: Test Container
+        run: |
+          # If image exists in registry or was pushed, pull it
+          if [[ "${{ steps.check_image.outcome }}" == "success" || ("${{ steps.build.outcome }}" == "success" && "${{ github.event_name }}" != "pull_request") ]]; then
+            docker pull ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}-server:${{ env.IMAGE_TAG }}
+            IMAGE_TO_TEST="${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}-server:${{ env.IMAGE_TAG }}"
+          else
+            # Use locally built image for PR
+            IMAGE_TO_TEST="${{ env.DOCKER_IMAGE_NAME }}-server:${{ env.IMAGE_TAG }}"
+          fi
+          
+          docker run -d --name test-server-container \
+            -p 3000:3000 \
+            -e NODE_ENV=production \
+            -e NEXTAUTH_SECRET=test-secret \
+            -e NEXTAUTH_URL=http://localhost:3000 \
+            $IMAGE_TO_TEST
+          
+          # Wait for container to start and check health
+          timeout=90
+          echo "Waiting for Next.js server to start..."
+          while [ $timeout -gt 0 ]; do
+            if curl -f http://localhost:3000/api/health; then
+              echo "✅ Next.js server is healthy"
+              docker stop test-server-container
+              docker rm test-server-container
+              exit 0
+            fi
+            echo "⏳ Waiting for server... ($timeout seconds remaining)"
+            sleep 2
+            timeout=$((timeout-2))
+          done
+          echo "❌ Next.js server failed to start properly"
+          echo "Server logs:"
+          docker logs test-server-container
+          docker stop test-server-container
+          docker rm test-server-container
+          exit 1
+
+  # Deploy server to Azure dev slot via manual dispatch
+  deploy-server-dev:
+    needs: server-build-and-test
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_dev == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set lowercase image name
+        run: |
+          echo "DOCKER_IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Deploy to Dev Slot
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          slot-name: dev
+          publish-profile: ${{ secrets.AZURE_WEBAPP_DEV_PUBLISH_PROFILE }}
+          images: ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}-server:${{ env.IMAGE_TAG }}
+
+  # Deploy server to Azure production on main pushes
+  deploy-server-prod:
+    needs: server-build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set lowercase image name
+        run: |
+          echo "DOCKER_IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Deploy to Production
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}-server:${{ env.IMAGE_TAG }}

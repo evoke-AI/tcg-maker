@@ -1,0 +1,209 @@
+name: SonarQube Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  sonarqube-server:
+    name: SonarQube (Server)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.4.0
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install Server Dependencies
+        working-directory: ./server
+        run: pnpm install
+
+      - name: Next.js Build
+        working-directory: ./server
+        continue-on-error: true
+        env:
+          # Provide minimal env vars for build to succeed
+          NEXTAUTH_SECRET: dummy-secret-for-build
+          NEXTAUTH_URL: http://localhost:3000
+          SKIP_ENV_VALIDATION: true
+        run: pnpm build || true
+
+      - name: TypeScript Type Check
+        working-directory: ./server
+        continue-on-error: true
+        run: npx tsc --noEmit --pretty || true
+
+      - name: Run ESLint for Server
+        working-directory: ./server
+        continue-on-error: true
+        run: pnpm lint --output-file eslint-report.json --format json || true
+
+      - name: Set Repository Name
+        id: repo-name
+        run: |
+          REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
+          echo "repo_name=$REPO_NAME" >> $GITHUB_OUTPUT
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          projectBaseDir: ./server
+          args: >
+            -Dsonar.projectKey=${{ steps.repo-name.outputs.repo_name }}-server
+            -Dsonar.projectName=${{ steps.repo-name.outputs.repo_name }}-server
+            -Dsonar.sources=app,lib,components,i18n
+            -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/*.test.ts,**/build/**,**/dist/**,**/.next/**,**/temp/**,**/prisma/migrations/**
+            -Dsonar.test.inclusions=**/*.spec.ts,**/*.test.ts
+            -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.eslint.reportPaths=eslint-report.json
+
+  sonarqube-flutter:
+    name: SonarQube (App)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: app/pubspec.yaml
+          channel: 'stable'
+
+      - name: Get Flutter dependencies
+        working-directory: ./app
+        run: flutter pub get
+
+      - name: Generate localization files
+        working-directory: ./app
+        run: flutter gen-l10n
+
+      - name: Run Flutter Analyze
+        working-directory: ./app
+        continue-on-error: true
+        run: flutter analyze > flutter-analyze-report.txt || true
+
+      - name: Run Flutter Tests with Coverage
+        working-directory: ./app
+        continue-on-error: true
+        run: flutter test --coverage || true
+
+      - name: Set Repository Name
+        id: repo-name
+        run: |
+          REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
+          echo "repo_name=$REPO_NAME" >> $GITHUB_OUTPUT
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          projectBaseDir: ./app
+          args: >
+            -Dsonar.projectKey=${{ steps.repo-name.outputs.repo_name }}-mobile
+            -Dsonar.projectName=${{ steps.repo-name.outputs.repo_name }}-mobile
+            -Dsonar.sources=lib
+            -Dsonar.exclusions=**/*.g.dart,**/*.freezed.dart,**/generated/**,**/build/**,**/.dart_tool/**,**/test/**
+            -Dsonar.test.inclusions=**/test/**,**/*_test.dart
+            -Dsonar.dart.analyzer.reportPath=flutter-analyze-report.txt
+            -Dsonar.dart.coverage.reportPath=coverage/lcov.info
+
+  sonarqube-quality-gate:
+    name: SonarQube Quality Gate Check
+    runs-on: ubuntu-latest
+    needs: [sonarqube-server, sonarqube-flutter]
+    if: always()
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for SonarQube Analysis
+        run: sleep 30
+
+      - name: Set Repository Name
+        id: repo-name
+        run: |
+          REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
+          echo "repo_name=$REPO_NAME" >> $GITHUB_OUTPUT
+
+      - name: Check Quality Gate - Server
+        continue-on-error: true
+        id: quality-gate-server
+        run: |
+          curl -u "${{ secrets.SONAR_TOKEN }}:" \
+            "${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=${{ steps.repo-name.outputs.repo_name }}-server" \
+            -o server-quality-gate.json
+          
+          status=$(cat server-quality-gate.json | grep -o '"status":"[^"]*"' | cut -d'"' -f4)
+          echo "status=$status" >> $GITHUB_OUTPUT
+          
+          if [ "$status" != "OK" ]; then
+            echo "Quality gate failed for server"
+            exit 1
+          fi
+
+      - name: Check Quality Gate - Flutter
+        continue-on-error: true
+        id: quality-gate-flutter
+        run: |
+          curl -u "${{ secrets.SONAR_TOKEN }}:" \
+            "${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=${{ steps.repo-name.outputs.repo_name }}-mobile" \
+            -o flutter-quality-gate.json
+          
+          status=$(cat flutter-quality-gate.json | grep -o '"status":"[^"]*"' | cut -d'"' -f4)
+          echo "status=$status" >> $GITHUB_OUTPUT
+          
+          if [ "$status" != "OK" ]; then
+            echo "Quality gate failed for Flutter"
+            exit 1
+          fi
+
+      - name: Report Quality Gate Results
+        run: |
+          echo "## SonarQube Quality Gate Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Server (Next.js)" >> $GITHUB_STEP_SUMMARY
+          echo "Status: ${{ steps.quality-gate-server.outputs.status || 'Unknown' }}" >> $GITHUB_STEP_SUMMARY
+          echo "Outcome: ${{ steps.quality-gate-server.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Flutter App" >> $GITHUB_STEP_SUMMARY
+          echo "Status: ${{ steps.quality-gate-flutter.outputs.status || 'Unknown' }}" >> $GITHUB_STEP_SUMMARY
+          echo "Outcome: ${{ steps.quality-gate-flutter.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "View detailed reports at: ${{ secrets.SONAR_HOST_URL }}" >> $GITHUB_STEP_SUMMARY

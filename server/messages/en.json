@@ -1,0 +1,228 @@
+{
+  "navigation": {
+    "home": "Home",
+    "login": "Login",
+    "logout": "Logout",
+    "admin": "Admin",
+    "dashboard": "Dashboard",
+    "schools": "Schools",
+    "mySchools": "My Schools",
+    "users": "Users",
+    "assignments": "Assignments",
+    "profile": "Profile"
+  },
+  "homePage": {
+    "title": "Welcome to our Application",
+    "description": "This is a sample web application template",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "loginPage": {
+    "title": "Sign In",
+    "identifier": "Username or Email",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign In",
+    "forgotPassword": "Forgot Password?",
+    "navigation": {
+      "home": "Back to home"
+    }
+  },
+  "adminPage": {
+    "title": "Admin Dashboard",
+    "welcome": "Welcome, {name}",
+    "users": "Users",
+    "settings": "Settings"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "errors": {
+      "unauthorized": "Unauthorized access",
+      "notFound": "Resource not found",
+      "server": "A server error occurred",
+      "fetch": "Failed to fetch data"
+    },
+    "success": "Operation successful",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "language": "Language",
+    "english": "English",
+    "chinese": "Traditional Chinese",
+    "switchTo": "Switch to {language}",
+    "viewAll": "View All",
+    "lastUpdated": "Last Updated",
+    "days": "days",
+    "ago": "ago",
+    "status": {
+      "label": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending"
+    },
+    "optional": "optional",
+    "saving": "Saving...",
+    "deleting": "Deleting",
+    "enable": "Enable",
+    "passwordPlaceholder": "Leave blank to keep current password",
+    "roles": {
+      "systemRoleLabel": "Role",
+      "selectSystemRole": "Select Role",
+      "noSystemRole": "No System Role",
+      "user": "User",
+      "admin": "Admin"
+    },
+    "actions": "Actions",
+    "search": "Search",
+    "add": "Add",
+    "remove": "Remove",
+    "manage": "Manage",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "total": "Total",
+    "members": "Members",
+    "users": "Users",
+    "classes": "Classes",
+    "overview": "Overview",
+    "details": "Details",
+    "settings": "Settings",
+    "information": "Information",
+    "quickActions": "Quick Actions",
+    "notProvided": "Not provided",
+    "created": "Created",
+    "joined": "Joined",
+    "grade": "Grade",
+    "dept": "Dept",
+    "id": "ID",
+    "email": "Email",
+    "username": "Username",
+    "studentId": "Student ID",
+    "gradeLevel": "Grade Level"
+  },
+  "dashboardPage": {
+    "title": "Dashboard",
+    "welcome": "Welcome to your dashboard. Here you can manage your account and access all application features.",
+    "overview": "Overview",
+    "stats": {
+      "users": "Total Users",
+      "projects": "Active Projects",
+      "tasks": "Pending Tasks"
+    },
+    "userInfo": {
+      "welcomeBack": "Welcome back",
+      "systemAdmin": "System Administrator",
+      "schoolAdmin": "School Administrator",
+      "teacher": "Teacher",
+      "student": "Student"
+    },
+    "quickStats": {
+      "schools": "Schools",
+      "classes": "Classes",
+      "students": "Students",
+      "assignments": "Assignments Due",
+      "assignmentsToGrade": "To Grade"
+    },
+    "sections": {
+      "schoolInfo": "School Information",
+      "teachingClasses": "Classes You Teach",
+      "studentClasses": "Your Classes",
+      "recentAssignments": "Recent Assignments",
+      "assignmentsDue": "Assignments Due",
+      "assignmentsToGrade": "Assignments to Grade",
+      "quickActions": "Quick Actions"
+    },
+    "actions": {
+      "viewAllAssignments": "View All Assignments",
+      "viewAssignments": "View Assignments",
+      "viewAll": "View All",
+      "assignments": "Assignments",
+      "assignmentsDesc": "View and manage assignments",
+      "adminPanel": "Admin Panel",
+      "adminPanelDesc": "Manage schools and users",
+      "schools": "Schools",
+      "schoolsDesc": "Manage all schools"
+    },
+    "details": {
+      "joined": "Joined",
+      "created": "Created",
+      "due": "Due",
+      "submissions": "submissions",
+      "students": "students",
+      "assignments": "assignments",
+      "needsGrading": "need grading",
+      "code": "Code",
+      "grade": "Grade"
+    }
+  },
+  "admin": {
+    "schools": {
+      "title": "School Management",
+      "description": "Manage schools, create new institutions, and oversee school administrators.",
+      "create": "Create School",
+      "search": "Search schools...",
+      "noSchools": "No schools found",
+      "createFirst": "Get started by creating your first school.",
+      "form": {
+        "name": "School Name",
+        "code": "School Code",
+        "address": "Address",
+        "phone": "Phone Number",
+        "email": "Email",
+        "website": "Website",
+        "namePlaceholder": "Lincoln High School",
+        "codePlaceholder": "LHS",
+        "addressPlaceholder": "123 Education Street, City, State 12345",
+        "phonePlaceholder": "+1 (555) 123-4567",
+        "emailPlaceholder": "admin@lincolnhigh.edu",
+        "websitePlaceholder": "https://www.lincolnhigh.edu",
+        "nameRequired": "School name is required",
+        "createError": "Failed to create school",
+        "creating": "Creating..."
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "add": "Add User",
+      "list": "User List",
+      "edit": "Edit User",
+      "delete": "Delete User",
+      "confirmDelete": "Are you sure you want to delete this user? This action cannot be undone.",
+      "noResults": "No users found",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "password": "Password",
+        "status": "Status",
+        "lastLogin": "Last Login",
+        "actions": "Actions"
+      }
+    },
+    "schoolManagement": {
+      "title": "School Management",
+      "description": "Manage school information and settings",
+      "editSchool": "Edit School",
+      "totalMembers": "Total Members",
+      "activeUsers": "Active users in {schoolName}",
+      "commonTasks": "Common management tasks for this school",
+      "manageUsers": "Manage Users",
+      "basicInfo": "Basic information about the school",
+      "schoolInfo": "School Information",
+      "schoolId": "School ID"
+    },
+    "schoolUsers": {
+      "title": "School Users",
+      "searchPlaceholder": "Search users...",
+      "addUser": "Add User",
+      "addUserTo": "Add User to {schoolName}",
+      "userManagementPlaceholder": "User management functionality will be implemented here.",
+      "noUsersFound": "No users found",
+      "tryAdjustingSearch": "Try adjusting your search terms.",
+      "getStartedAddUsers": "Get started by adding users to this school.",
+      "roles": "Roles"
+    }
+  }
+} 

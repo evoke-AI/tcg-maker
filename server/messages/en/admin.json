@@ -1,0 +1,407 @@
+{
+  "dashboard": {
+    "title": "Admin Dashboard",
+    "welcome": "Welcome to the Admin Dashboard",
+    "summary": "System Summary"
+  },
+  "users": {
+    "title": "User Management",
+    "description": "Manage system users and super administrators.",
+    "add": "Add User",
+    "edit": "Edit User",
+    "delete": "Delete User",
+    "search": "Search users...",
+    "noResults": "No users found",
+    "confirmDelete": "Are you sure you want to delete this user? This action cannot be undone.",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "status": "Status",
+      "lastLogin": "Last Login",
+      "actions": "Actions"
+    },
+    "list": "Users List"
+  },
+  "settings": {
+    "title": "System Settings",
+    "general": "General Settings",
+    "security": "Security Settings",
+    "notifications": "Notification Settings",
+    "save": "Save Settings",
+    "resetToDefault": "Reset to Default"
+  },
+  "schools": {
+    "title": "School Management",
+    "description": "Manage schools, create new institutions, and oversee school administrators.",
+    "createSchool": "Create School",
+    "searchPlaceholder": "Search schools...",
+    "noSchools": "No schools found",
+    "loading": "Loading schools...",
+    "form": {
+      "name": "School Name",
+      "namePlaceholder": "Enter school name",
+      "nameRequired": "School name is required",
+      "code": "School Code",
+      "codePlaceholder": "Enter unique school code (e.g., DEMO001)",
+      "codeRequired": "School code is required",
+      "codeInvalid": "School code must be alphanumeric and 3-20 characters long",
+      "address": "Address",
+      "addressPlaceholder": "Enter school address",
+      "phone": "Phone Number",
+      "phonePlaceholder": "Enter phone number",
+      "email": "Email",
+      "emailPlaceholder": "Enter school email",
+      "emailInvalid": "Please enter a valid email address",
+      "website": "Website",
+      "websitePlaceholder": "Enter school website URL",
+      "websiteInvalid": "Please enter a valid URL",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter school description",
+      "cancel": "Cancel",
+      "create": "Create School",
+      "creating": "Creating..."
+    }
+  },
+  "school": {
+    "description": "Manage school settings, information, and configuration.",
+    "management": {
+      "title": "School Management",
+      "description": "Manage school information and settings",
+      "editSchool": "Edit School",
+      "totalMembers": "Total Members",
+      "activeUsers": "Active users in {schoolName}",
+      "commonTasks": "Common management tasks for this school",
+      "manageUsers": "Manage Users",
+      "basicInfo": "Basic information about the school",
+      "schoolInfo": "School Information",
+      "schoolId": "School ID"
+    }
+  },
+  "schoolUsers": {
+    "description": "Manage users, roles, and permissions for this school.",
+    "title": "School Users",
+    "searchPlaceholder": "Search users...",
+    "addUser": "Add User",
+    "addUserTo": "Add User to {schoolName}",
+    "userManagementPlaceholder": "User management functionality will be implemented here.",
+    "noUsersFound": "No users found",
+    "tryAdjustingSearch": "Try adjusting your search terms.",
+    "getStartedAddUsers": "Get started by adding users to this school.",
+    "roles": "Roles"
+  },
+  "schoolRoles": {
+    "description": "Manage roles and permissions for this school."
+  },
+  "bulkUserManagement": {
+    "title": "School Management",
+    "description": "Manage users and classes for {schoolName}",
+    "tabs": {
+      "users": "Users",
+      "classes": "Classes"
+    },
+    "users": {
+      "searchPlaceholder": "Search users...",
+      "search": "Search",
+      "template": "Template",
+      "bulkImport": "Bulk Import",
+      "addUser": "Add User",
+      "addUserTo": "Add User to {schoolName}",
+      "inviteExternal": "Invite External User",
+      "selected": "{count} user{plural} selected",
+      "bulkActions": "Bulk Actions",
+      "changeRole": "Change Role",
+      "selectRole": "Select new role",
+      "apply": "Apply",
+      "noUsersFound": "No users found",
+      "tryAdjustingSearch": "Try adjusting your search terms or add some users to get started.",
+      "table": {
+        "select": "Select",
+        "name": "Name",
+        "username": "Username",
+        "email": "Email",
+        "role": "Role",
+        "class": "Class",
+        "grade": "Grade",
+        "status": "Status",
+        "joinedAt": "Joined",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "form": {
+        "firstName": "First Name",
+        "firstNameRequired": "First name is required",
+        "lastName": "Last Name",
+        "lastNameRequired": "Last name is required",
+        "username": "Username",
+        "usernameRequired": "Username is required",
+        "email": "Email",
+        "emailRequired": "Email is required",
+        "role": "Role",
+        "selectRole": "Select role",
+        "studentId": "Student ID",
+        "studentIdPlaceholder": "Enter student ID (optional)",
+        "gradeLevel": "Grade Level",
+        "selectGrade": "Select grade level",
+        "generatePassword": "Generate Password",
+        "generatePasswordHelp": "A secure password will be generated automatically",
+        "cancel": "Cancel",
+        "create": "Create User",
+        "creating": "Creating...",
+        "update": "Update User",
+        "updating": "Updating..."
+      }
+    },
+    "classes": {
+      "searchPlaceholder": "Search classes...",
+      "search": "Search",
+      "addClass": "Add Class",
+      "addClassTo": "Add Class to {schoolName}",
+      "noClassesFound": "No classes found",
+      "tryAdjustingSearch": "Try adjusting your search terms or add some classes to get started.",
+      "table": {
+        "name": "Class Name",
+        "code": "Code",
+        "grade": "Grade",
+        "subject": "Subject",
+        "teachers": "Teachers",
+        "students": "Students",
+        "assignments": "Assignments",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "name": "Class Name",
+        "nameRequired": "Class name is required",
+        "code": "Class Code",
+        "codeOptional": "Class code (optional)",
+        "subject": "Subject",
+        "selectSubject": "Select subject",
+        "gradeLevel": "Grade Level",
+        "selectGrade": "Select grade level",
+        "description": "Description",
+        "descriptionOptional": "Class description (optional)",
+        "cancel": "Cancel",
+        "create": "Create Class",
+        "creating": "Creating...",
+        "update": "Update Class",
+        "updating": "Updating..."
+      }
+    },
+    "passwordReset": {
+      "title": "Reset Password",
+      "singleDescription": "Reset the password for {name}. This action cannot be undone.",
+      "bulkDescription": "Reset passwords for {count} selected users. This action cannot be undone.",
+      "generatePassword": "Generate secure password automatically",
+      "customPassword": "Custom Password",
+      "customPasswordPlaceholder": "Enter a custom password (minimum 12 characters)",
+      "passwordRequirements": "Password must be at least 12 characters long",
+      "bulkWarning": "Warning: Bulk Password Reset",
+      "bulkWarningDetails": "This will reset passwords for all selected users. Make sure to securely distribute the new passwords to the affected users.",
+      "successMessage": "Successfully reset {count} password(s)",
+      "downloadPrompt": "For security, download the password list and distribute securely to users.",
+      "downloadCsv": "Download Password List",
+      "cancel": "Cancel",
+      "resetPassword": "Reset Password",
+      "resetting": "Resetting...",
+      "close": "Close"
+    },
+    "bulkImport": {
+      "title": "Bulk Import Users",
+      "steps": {
+        "upload": {
+          "title": "Upload CSV File",
+          "description": "Upload a CSV file to create multiple users and classes at once.",
+          "requirements": {
+            "required": "Required columns: username, firstName, lastName, role",
+            "optional": "Optional columns: studentId, className, classCode, gradeLevel, subject",
+            "grades": "Grade Levels: Use Hong Kong system (K1-K3, P1-P6, S1-S6, F1-F2)",
+            "autoCreate": "Classes will be automatically created if they don't exist!"
+          },
+                     "dropzone": {
+             "title": "Choose CSV file or drag and drop",
+             "subtitle": "CSV files only",
+             "dragTitle": "Drop CSV file here",
+             "dragSubtitle": "Release to upload"
+           },
+          "validationErrors": "Validation Errors:",
+          "downloadTemplate": "Download Template",
+          "cancel": "Cancel"
+        },
+        "preview": {
+          "title": "Preview Import Data",
+          "usersToCreate": "{count} users to create",
+          "table": {
+            "username": "Username",
+            "name": "Name",
+            "role": "Role",
+            "class": "Class",
+            "grade": "Grade",
+            "subject": "Subject"
+          },
+          "back": "Back",
+          "createUsers": "Create {count} Users"
+        },
+        "processing": {
+          "title": "Creating Users...",
+          "description": "Please wait while we create {count} users"
+        },
+        "results": {
+          "title": "Import Results",
+          "warning": {
+            "title": "⚠️ CRITICAL: Download Credentials Immediately!",
+            "description1": "The login credentials and passwords for the {count} newly created users are only available RIGHT NOW.",
+            "description2": "These credentials will be permanently lost once you close this dialog or navigate away from this page.",
+            "description3": "You MUST download the credentials file before proceeding. There is no way to recover these passwords later.",
+            "downloadButton": "DOWNLOAD CREDENTIALS NOW"
+          },
+          "summary": {
+            "usersCreated": "Users Created",
+            "classesCreated": "Classes Created",
+            "failed": "Failed",
+            "total": "Total"
+          },
+          "errors": "Errors:",
+          "errorRow": "Row {row}: {username} - {error}",
+          "createdClasses": "Created Classes:",
+          "success": "✅ Successfully created {userCount} users{classText}.",
+          "successWithClasses": " and {classCount} classes",
+          "downloadReminder": "Remember: Download the credentials file above before closing this dialog!",
+          "downloadFirst": "Download credentials first!",
+          "closeWithoutDownload": "Close Without Downloading",
+          "close": "Close"
+        }
+      },
+      "closeWarning": {
+        "title": "⚠️ Warning: Credentials Not Downloaded",
+        "description1": "You are about to close without downloading the user credentials!",
+        "description2": "The login information and passwords for the newly created users will be permanently lost if you close now.",
+        "description3": "This action cannot be undone. There is no way to recover these passwords later.",
+        "goBack": "Go Back & Download",
+        "closeAnyway": "Close Anyway (Lose Credentials)"
+      }
+    },
+    "roles": {
+      "admin": "Admin",
+      "teacher": "Teacher",
+      "student": "Student"
+    },
+    "subjects": {
+      "mathematics": "Mathematics",
+      "english": "English",
+      "science": "Science",
+      "history": "History",
+      "geography": "Geography",
+      "physics": "Physics",
+      "chemistry": "Chemistry",
+      "biology": "Biology",
+      "literature": "Literature",
+      "art": "Art",
+      "music": "Music",
+      "physicalEducation": "Physical Education",
+      "computerScience": "Computer Science",
+      "other": "Other"
+    },
+    "grades": {
+      "categories": {
+        "prePrimary": "Pre-primary",
+        "primary": "Primary",
+        "juniorSecondary": "Junior Secondary",
+        "seniorSecondary": "Senior Secondary",
+        "other": "Other"
+      },
+      "levels": {
+        "k1": "K1 (Kindergarten 1)",
+        "k2": "K2 (Kindergarten 2)",
+        "k3": "K3 (Kindergarten 3)",
+        "p1": "P1 (Primary 1)",
+        "p2": "P2 (Primary 2)",
+        "p3": "P3 (Primary 3)",
+        "p4": "P4 (Primary 4)",
+        "p5": "P5 (Primary 5)",
+        "p6": "P6 (Primary 6)",
+        "s1": "S1 (Secondary 1)",
+        "s2": "S2 (Secondary 2)",
+        "s3": "S3 (Secondary 3)",
+        "s4": "S4 (Secondary 4)",
+        "s5": "S5 (Secondary 5)",
+        "s6": "S6 (Secondary 6)",
+        "other": "Other"
+      }
+    }
+  },
+  "invitations": {
+    "title": "School Invitations",
+    "description": "Invite users to join {schoolName} by email. If the user exists in the system, they will be automatically added to the school.",
+    "dismiss": "Dismiss",
+    "form": {
+      "invite": "Invite User",
+      "title": "Invite User to {schoolName}",
+      "email": "Email Address",
+      "emailPlaceholder": "user@example.com",
+      "role": "Role",
+      "rolePlaceholder": "Select a role",
+      "helpText": "If the user already exists in the system, they will be automatically added to the school. Otherwise, a pending invitation will be created.",
+      "cancel": "Cancel",
+      "sendInvitation": "Send Invitation",
+      "sending": "Sending...",
+      "validation": {
+        "emailRequired": "Email address is required",
+        "emailInvalid": "Please enter a valid email address",
+        "roleRequired": "Role is required",
+        "roleInvalid": "Please select a valid role"
+      },
+      "roles": {
+        "admin": "Admin",
+        "teacher": "Teacher",
+        "student": "Student"
+      }
+    },
+    "list": {
+      "title": "Invitations",
+      "loading": "Loading invitations...",
+      "refresh": "Refresh",
+      "empty": {
+        "title": "No invitations found",
+        "description": "Start by inviting users to join this school."
+      },
+      "invitedBy": "Invited by",
+      "invitedAt": "Invited on",
+      "acceptedBy": "Accepted by",
+      "acceptedAt": "Accepted on",
+      "actions": {
+        "resend": "Resend",
+        "cancel": "Cancel"
+      }
+    },
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "expired": "Expired"
+    },
+    "expiry": {
+      "expired": "Expired",
+      "today": "Expires today",
+      "tomorrow": "Expires tomorrow",
+      "daysLeft": "Expires in {days} days"
+    },
+    "filters": {
+      "all": "All Invitations"
+    },
+    "success": {
+      "invitationSent": "Invitation sent successfully",
+      "invitationCancelled": "Invitation cancelled successfully",
+      "invitationResent": "Invitation resent successfully"
+    },
+    "errors": {
+      "loadFailed": "Failed to load invitations",
+      "createFailed": "Failed to send invitation",
+      "cancelFailed": "Failed to cancel invitation",
+      "resendFailed": "Failed to resend invitation"
+    }
+  }
+} 

@@ -1,0 +1,42 @@
+{
+  "title": "My Profile",
+  "description": "Manage your personal information and account settings",
+  "personalInfo": {
+    "title": "Personal Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "username": "Username",
+    "studentId": "Student ID",
+    "studentIdNote": "Students cannot modify their own Student ID - contact your school administrator",
+    "gradeLevel": "Grade Level",
+    "gradeLevelNote": "Students cannot modify their own Grade Level - contact your school administrator",
+    "department": "Department",
+    "systemRole": "System Role",
+    "accountStatus": "Account Status",
+    "memberSince": "Member Since",
+    "usernameNote": "Username can only be changed by school administrators",
+    "updateProfile": "Update Profile",
+    "updating": "Updating...",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Failed to update profile"
+  },
+  "schoolMemberships": {
+    "title": "School Memberships",
+    "noSchools": "You are not currently a member of any schools",
+    "role": "Role",
+    "joinedDate": "Joined"
+  },
+  "security": {
+    "title": "Security",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "passwordRequirements": "Password must be at least 8 characters long",
+    "updatePassword": "Update Password",
+    "updatingPassword": "Updating Password...",
+    "passwordUpdateSuccess": "Password updated successfully",
+    "passwordUpdateError": "Failed to update password"
+  }
+} 

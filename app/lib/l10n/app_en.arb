@@ -1,0 +1,138 @@
+{
+  "@@locale": "en",
+  
+  "appTitle": "Nowledge",
+  "@appTitle": {
+    "description": "Main application title"
+  },
+
+  "heroTitle": "Nowledge",
+  "@heroTitle": {
+    "description": "Hero section title"
+  },
+
+  "heroSubtitle": "Transform your social media content with AI-powered translation",
+  "@heroSubtitle": {
+    "description": "Hero section subtitle"
+  },
+
+  "enterTextToTranslate": "Enter text to translate",
+  "@enterTextToTranslate": {
+    "description": "Translation section title"
+  },
+
+  "inputPlaceholder": "Type your message here...",
+  "@inputPlaceholder": {
+    "description": "Text input placeholder"
+  },
+
+  "translateButton": "Translate",
+  "@translateButton": {
+    "description": "Translate button text"
+  },
+
+  "translatingButton": "Translating...",
+  "@translatingButton": {
+    "description": "Translate button text when loading"
+  },
+
+  "translationResult": "Translation Result",
+  "@translationResult": {
+    "description": "Translation result section title"
+  },
+
+  "featuresTitle": "Features",
+  "@featuresTitle": {
+    "description": "Features section title"
+  },
+
+  "aiTranslationTitle": "AI Translation",
+  "@aiTranslationTitle": {
+    "description": "AI Translation feature title"
+  },
+
+  "aiTranslationDescription": "Powered by advanced AI models",
+  "@aiTranslationDescription": {
+    "description": "AI Translation feature description"
+  },
+
+  "socialReadyTitle": "Social Ready",
+  "@socialReadyTitle": {
+    "description": "Social Ready feature title"
+  },
+
+  "socialReadyDescription": "Optimized for social platforms",
+  "@socialReadyDescription": {
+    "description": "Social Ready feature description"
+  },
+
+  "errorInvalidText": "Please enter valid text to translate",
+  "@errorInvalidText": {
+    "description": "Error message for invalid text input"
+  },
+
+  "errorTranslationFailed": "Translation failed. Please try again.",
+  "@errorTranslationFailed": {
+    "description": "Error message when translation fails"
+  },
+
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "English language name"
+  },
+
+  "languageSpanish": "Spanish",
+  "@languageSpanish": {
+    "description": "Spanish language name"
+  },
+
+  "languageFrench": "French",
+  "@languageFrench": {
+    "description": "French language name"
+  },
+
+  "languageGerman": "German",
+  "@languageGerman": {
+    "description": "German language name"
+  },
+
+  "languageChinese": "Simplified Chinese",
+  "@languageChinese": {
+    "description": "Simplified Chinese language name"
+  },
+
+  "languageJapanese": "Japanese",
+  "@languageJapanese": {
+    "description": "Japanese language name"
+  },
+
+  "languageKorean": "Korean",
+  "@languageKorean": {
+    "description": "Korean language name"
+  },
+
+  "languageChineseTraditional": "Traditional Chinese",
+  "@languageChineseTraditional": {
+    "description": "Traditional Chinese language name"
+  },
+
+  "displayLanguage": "Display Language",
+  "@displayLanguage": {
+    "description": "Display language selector label"
+  },
+
+  "translationFeature": "Translation",
+  "@translationFeature": {
+    "description": "Translation feature navigation item"
+  },
+
+  "aboutFeature": "About",
+  "@aboutFeature": {
+    "description": "About feature navigation item"
+  },
+
+  "logoutButton": "Logout",
+  "@logoutButton": {
+    "description": "Logout button text"
+  }
+} 
