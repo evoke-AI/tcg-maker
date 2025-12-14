@@ -14,6 +14,18 @@ export default function RootLayoutClient({
   // Add paths where navbar should be hidden
   const hideNavbarPaths = ['/login']
   const shouldHideNavbar = hideNavbarPaths.includes(pathname)
+  
+  // Full-screen pages that bypass MainLayout entirely
+  const fullScreenPaths = ['/', '/en', '/zh-TW']
+  const isFullScreenPage = fullScreenPaths.includes(pathname)
+
+  if (isFullScreenPage) {
+    return (
+      <SessionProvider>
+        {children}
+      </SessionProvider>
+    )
+  }
 
   return (
     <SessionProvider>

@@ -1,15 +1,12 @@
-import { Inter } from "next/font/google"
 import { Metadata } from 'next'
 import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] })
-
 export const metadata: Metadata = {
   title: {
-    template: '%s | evoke AI',
-    default: 'evoke AI'
+    template: '%s | TCG Maker',
+    default: 'TCG Maker'
   },
-  description: 'Transform your ideas into reality with evoke AI',
+  description: 'Create stunning, consistent trading card artwork with AI',
   icons: {
     icon: '/favicon.ico',
   },
@@ -21,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html>
-      <body className={inter.className}>
+    <html lang="en" className="dark">
+      <body className="min-h-screen bg-slate-950 text-white antialiased">
         {children}
       </body>
     </html>
